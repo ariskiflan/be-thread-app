@@ -1,0 +1,81 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Test {
+  id    Int     @id @default(autoincrement())
+  test String
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  username String @unique
+  fullname String 
+  email String @unique
+  password String
+  follower Follow[] @relation("follower")
+  following Follow[] @relation("following")
+  profile Profile?
+  thread Thread[]
+  like Like[] @relation("user")
+  
+}
+
+model Follow {
+  followerId Int
+   follower   User @relation("follower", fields: [followerId], references: [id])
+   followingId Int
+   following  User @relation("following", fields: [followingId], references: [id])
+  
+  @@id([followerId, followingId])
+}
+
+model Profile {
+  id Int @id @default(autoincrement())
+  userId Int @unique
+  user User @relation(fields: [userId], references: [id])
+  avatar String?
+  cover String?
+  bio String?
+}
+
+model Thread {
+  id Int @id @default(autoincrement())
+  content String?
+  posted_at DateTime @default(now())
+  
+  userId Int
+  auhtor User @relation(fields: [userId], references: [id])
+  like Like[] @relation("thread")
+  threadId Int?
+  parent Thread? @relation("threadReplies", fields: [threadId], references: [id])
+  replies Thread[] @relation("threadReplies")
+  image threadImage[]
+}
+
+model Like {
+  threadId Int
+  thread   Thread @relation("thread", fields: [threadId], references: [id])
+  userId   Int
+  user     User   @relation("user", fields: [userId], references: [id])
+
+  @@id([threadId, userId])
+}
+
+model threadImage {
+id Int @id @default(autoincrement())
+image String
+threadId Int
+thread Thread @relation(fields: [threadId], references: [id])
+}
