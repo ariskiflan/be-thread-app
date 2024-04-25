@@ -1,14 +1,48 @@
 import db from "../db";
-import { IProfile } from "../type/app";
+import { IEditProfile } from "../type/app";
 
-export const updateProfile = async (userId: number, payload: IProfile) => {
+export const updateProfile = async (userId: number, payload: IEditProfile) => {
+  const dataToUpdate: Partial<IEditProfile> = {};
+
+  if (payload.bio !== undefined && payload.bio !== null) {
+    dataToUpdate.bio = payload.bio;
+  }
+
+  if (payload.avatar !== undefined && payload.avatar !== null) {
+    dataToUpdate.avatar = payload.avatar;
+  }
+
+  if (payload.cover !== undefined && payload.cover !== null) {
+    dataToUpdate.cover = payload.cover;
+  }
+
+  if (payload.username !== undefined && payload.username !== null) {
+    await db.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        username: payload.username,
+      },
+    });
+  }
+
+  if (payload.fullname !== undefined && payload.fullname !== null) {
+    await db.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        fullname: payload.fullname,
+      },
+    });
+  }
+
   return await db.profile.update({
     where: {
-      userId,
+      userId: userId,
     },
-    data: {
-      ...payload,
-    },
+    data: dataToUpdate,
   });
 };
 

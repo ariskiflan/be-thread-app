@@ -60,3 +60,22 @@ export const getUsers = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const getUsersSearch = async (req: Request, res: Response) => {
+  try {
+    const users = await userServices.getUsersSearch();
+
+    res.json({
+      status: true,
+      message: "success",
+      data: users,
+    });
+  } catch (error) {
+    const err = error as unknown as Error;
+
+    res.status(500).json({
+      status: false,
+      message: err.message,
+    });
+  }
+};

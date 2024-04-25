@@ -27,3 +27,11 @@ export interface Ithread {
   userId: number;
   threadId: number;
 }
+
+export interface IEditProfile {
+  bio?: string;
+  avatar?: string;
+  cover?: string;
+  username?: string;
+  fullname?: string;
+}

@@ -95,3 +95,26 @@ export const login = async (
 
   return token;
 };
+
+export const getUsersSearch = async () => {
+  return await db.user.findMany({
+    include: {
+      following: {
+        select: {
+          followingId: true,
+        },
+      },
+      follower: {
+        select: {
+          followerId: true,
+        },
+      },
+      profile: {
+        select: {
+          avatar: true,
+          bio: true,
+        },
+      },
+    },
+  });
+};

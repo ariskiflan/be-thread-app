@@ -28,6 +28,7 @@ export const getThreads = async () => {
       _count: {
         select: {
           replies: true,
+          like: true,
         },
       },
     },
@@ -64,6 +65,7 @@ export const getThread = async (id: number) => {
       _count: {
         select: {
           replies: true,
+          like: true,
         },
       },
     },
@@ -97,6 +99,7 @@ export const getThreadByToken = async (id: number) => {
       _count: {
         select: {
           replies: true,
+          like: true,
         },
       },
     },
@@ -141,15 +144,15 @@ export const deleteThread = async (idThread: number, userId: number) => {
   if (existedThread.userId !== userId)
     throw new Error("you dont have permission to delete this Thread ");
 
-  await db.thread.delete({
-    where: {
-      id: idThread,
-    },
-  });
-
   await db.threadImage.deleteMany({
     where: {
       threadId: idThread,
+    },
+  });
+
+  await db.thread.delete({
+    where: {
+      id: idThread,
     },
   });
 
@@ -179,6 +182,7 @@ export const getReplies = async (threadId: number) => {
       _count: {
         select: {
           replies: true,
+          like: true,
         },
       },
     },
