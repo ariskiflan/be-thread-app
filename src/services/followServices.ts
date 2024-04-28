@@ -43,6 +43,7 @@ export const getFollower = async (followingId: number) => {
           profile: {
             select: {
               avatar: true,
+              bio: true,
             },
           },
         },
@@ -65,10 +66,54 @@ export const getFollowing = async (followerId: number) => {
           profile: {
             select: {
               avatar: true,
+              bio: true,
             },
           },
         },
       },
     },
   });
+};
+
+export const getFollowingUsers = async (userId: number) => {
+  const followingUsers = await db.follow.findMany({
+    where: {
+      followerId: userId,
+    },
+    include: {
+      following: {
+        include: {
+          profile: {
+            select: {
+              avatar: true,
+              bio: true,
+            },
+          },
+        },
+      },
+    },
+  });
+  return followingUsers.map((follow) => follow.following);
+};
+
+export const getFollowersUsers = async (userId: number) => {
+  const followersUsers = await db.follow.findMany({
+    where: {
+      followingId: userId,
+    },
+    include: {
+      follower: {
+        include: {
+          profile: {
+            select: {
+              avatar: true,
+              bio: true,
+            },
+          },
+          follower: true,
+        },
+      },
+    },
+  });
+  return followersUsers.map((follow) => follow.follower);
 };

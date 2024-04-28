@@ -64,6 +64,17 @@ export const getProfile = async (userId: number) => {
               id: true,
             },
           },
+          following: {
+            select: {
+              followingId: true,
+            },
+          },
+          follower: {
+            select: {
+              followerId: true,
+              followingId: true,
+            },
+          },
         },
       },
     },

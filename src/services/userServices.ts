@@ -8,15 +8,30 @@ export const getUsers = async () => {
   return await db.user.findMany();
 };
 
-export const gerUser = async (id: number) => {
+export const getUser = async (id: number) => {
   return await db.user.findFirst({
     where: {
       id,
     },
-    include: {
+    select: {
+      id: true,
+      username: true,
+      fullname: true,
       profile: {
         select: {
           avatar: true,
+          cover: true,
+          bio: true,
+        },
+      },
+      follower: {
+        select: {
+          followerId: true,
+        },
+      },
+      following: {
+        select: {
+          followingId: true,
         },
       },
     },
@@ -107,6 +122,46 @@ export const getUsersSearch = async () => {
       follower: {
         select: {
           followerId: true,
+        },
+      },
+      profile: {
+        select: {
+          avatar: true,
+          bio: true,
+        },
+      },
+    },
+  });
+};
+
+// export const getOtherUsers = async (id: number) => {
+//   const user = await db.$queryRaw`
+//     SELECT "User".id, "User".username, "User".fullname, "Profile".avatar
+//     FROM "User"
+//     LEFT JOIN "Profile" ON "User".id = "Profile"."userId"
+//     where "User".id != ${id}
+//     ORDER BY random()
+//     LIMIT 5`;
+
+//   return user;
+// };
+
+export const getUserNotId = async (id: number) => {
+  return await db.user.findMany({
+    where: {
+      NOT: {
+        id: id,
+      },
+    },
+    include: {
+      follower: {
+        select: {
+          followerId: true,
+        },
+      },
+      following: {
+        select: {
+          followingId: true,
         },
       },
       profile: {

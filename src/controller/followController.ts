@@ -65,3 +65,45 @@ export const getFollowings = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const getFollowingsUsers = async (req: Request, res: Response) => {
+  try {
+    const id = res.locals.user;
+
+    const followings = await followServices.getFollowingUsers(id);
+
+    res.json({
+      success: true,
+      message: "success",
+      data: followings,
+    });
+  } catch (error) {
+    const err = error as unknown as Error;
+
+    res.status(500).json({
+      status: false,
+      message: err.message,
+    });
+  }
+};
+
+export const getFollowersUsers = async (req: Request, res: Response) => {
+  try {
+    const id = res.locals.user;
+
+    const followers = await followServices.getFollowersUsers(id);
+
+    res.json({
+      success: true,
+      message: "success",
+      data: followers,
+    });
+  } catch (error) {
+    const err = error as unknown as Error;
+
+    res.status(500).json({
+      status: false,
+      message: err.message,
+    });
+  }
+};

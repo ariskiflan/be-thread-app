@@ -58,6 +58,8 @@ export const getThread = async (id: number) => {
           profile: {
             select: {
               avatar: true,
+              bio: true,
+              cover: true,
             },
           },
         },
@@ -89,6 +91,49 @@ export const getThreadByToken = async (id: number) => {
           username: true,
           id: true,
           fullname: true,
+          profile: {
+            select: {
+              avatar: true,
+            },
+          },
+        },
+      },
+      _count: {
+        select: {
+          replies: true,
+          like: true,
+        },
+      },
+    },
+    orderBy: {
+      id: "desc",
+    },
+  });
+};
+
+export const getThreadByUserId = async (id: number) => {
+  return await db.thread.findMany({
+    where: {
+      userId: id,
+      threadId: null,
+    },
+    include: {
+      image: {
+        select: {
+          image: true,
+        },
+      },
+      auhtor: {
+        select: {
+          username: true,
+          id: true,
+          fullname: true,
+          thread: {
+            select: {
+              content: true,
+              posted_at: true,
+            },
+          },
           profile: {
             select: {
               avatar: true,
