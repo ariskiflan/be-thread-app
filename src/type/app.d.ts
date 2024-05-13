@@ -26,6 +26,7 @@ export interface Ithread {
   content?: string;
   userId: number;
   threadId: number;
+  images: IImage[];
 }
 
 export interface IEditProfile {
@@ -34,4 +35,10 @@ export interface IEditProfile {
   cover?: string;
   username?: string;
   fullname?: string;
+}
+
+export interface IImage {
+  id?: number;
+  image: string;
+  threadId: number;
 }

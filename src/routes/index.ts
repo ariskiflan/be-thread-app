@@ -32,6 +32,9 @@ import {
   getCurrentLike,
   getLikes,
 } from "../controller/likesController";
+import cloudinary from "../lib/cloudinary";
+import multerMidlleware from "../midlleware/uploads";
+cloudinary.config();
 
 const Route = express.Router();
 
@@ -41,11 +44,11 @@ Route.get("/users", auth, getUsers);
 Route.get("/user", auth, getUsersSearch);
 Route.get("/user/:id", auth, getUser);
 
-Route.patch("/profile", auth, uploadMidlleware("cover"), updateProfile);
+Route.patch("/profile", auth, uploadMidlleware(), updateProfile);
 Route.get("/profile", auth, getProfile);
 Route.get("/profile/:id", auth, getProfile);
 
-Route.post("/thread", auth, uploadMidlleware("image"), createThread);
+Route.post("/thread", auth, multerMidlleware(), createThread);
 Route.get("/threads", getThreads);
 Route.get("/thread/:id", auth, getThread);
 Route.get("/threadByToken", auth, getThreadByToken);

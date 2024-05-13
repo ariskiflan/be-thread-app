@@ -61,7 +61,7 @@ model Thread {
   threadId Int?
   parent Thread? @relation("threadReplies", fields: [threadId], references: [id])
   replies Thread[] @relation("threadReplies")
-  image threadImage[]
+  image ThreadImage[]
 }
 
 model Like {
@@ -73,7 +73,7 @@ model Like {
   @@id([threadId, userId])
 }
 
-model threadImage {
+model ThreadImage {
 id Int @id @default(autoincrement())
 image String
 threadId Int

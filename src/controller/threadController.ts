@@ -85,10 +85,7 @@ export const createThread = async (req: Request, res: Response) => {
     const { body } = req;
     body.userId = res.locals.user;
 
-    const thread = await threadService.createThread(
-      body,
-      req.files as { [fieldname: string]: Express.Multer.File[] }
-    );
+    const thread = await threadService.createThread(body);
 
     res.json({
       status: true,

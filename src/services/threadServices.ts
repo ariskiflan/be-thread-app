@@ -132,6 +132,7 @@ export const getThreadByUserId = async (id: number) => {
             select: {
               content: true,
               posted_at: true,
+              id: true,
             },
           },
           profile: {
@@ -154,21 +155,28 @@ export const getThreadByUserId = async (id: number) => {
   });
 };
 
-export const createThread = async (
-  payload: Ithread,
-  files: { [fieldname: string]: Express.Multer.File[] }
-) => {
+export const createThread = async (payload: Ithread) => {
+  console.log(payload);
+
+  // const thread = await db.thread.create({
+  //   data: {
+  //     ...payload,
+  //     threadId: payload.threadId ? +payload.threadId : null,
+  //   },
+  // });
+
   const thread = await db.thread.create({
     data: {
-      ...payload,
+      content: payload.content,
+      userId: payload.userId,
       threadId: payload.threadId ? +payload.threadId : null,
     },
   });
 
-  if (files.image) {
+  if (payload.images && payload.images.length > 0) {
     await db.threadImage.createMany({
-      data: files.image.map((image) => ({
-        image: image.filename,
+      data: payload.images.map((image) => ({
+        image: image.image,
         threadId: thread.id,
       })),
     });

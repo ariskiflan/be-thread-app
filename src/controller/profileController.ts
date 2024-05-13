@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import * as ProfileServices from "../services/profileServices";
+import { v2 as cloudinary } from "cloudinary";
 
 export const updateProfile = async (req: Request, res: Response) => {
   try {
@@ -9,12 +10,18 @@ export const updateProfile = async (req: Request, res: Response) => {
 
     if (files && files.cover && files.cover[0] && files.cover[0].filename) {
       const cover = files.cover[0].filename;
-      body.cover = cover;
+      const cloudinaryResponse = await cloudinary.uploader.upload(
+        "./src/uploads/" + cover
+      );
+      body.cover = cloudinaryResponse.secure_url;
     }
 
     if (files && files.avatar && files.avatar[0] && files.avatar[0].filename) {
       const avatar = files.avatar[0].filename;
-      body.avatar = avatar;
+      const cloudinaryResponse = await cloudinary.uploader.upload(
+        "./src/uploads/" + avatar
+      );
+      body.avatar = cloudinaryResponse.secure_url;
     }
 
     await ProfileServices.updateProfile(userId, body);
