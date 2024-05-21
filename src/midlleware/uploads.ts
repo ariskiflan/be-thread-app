@@ -62,9 +62,9 @@ const multerMidlleware = () => {
           const { image, avatar, cover } = files;
           if (image && image.length > 0) {
             const imagesUrls = await Promise.all(
-              image.map(async (image) => {
+              image.map(async (img) => {
                 try {
-                  const imageUrl = await cloudinary.uploader.upload(image.path);
+                  const imageUrl = await cloudinary.uploader.upload(img.path);
                   const images = {
                     image: imageUrl.secure_url,
                   };

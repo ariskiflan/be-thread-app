@@ -26,7 +26,7 @@ export interface Ithread {
   content?: string;
   userId: number;
   threadId: number;
-  images: IImage[];
+  image: IImage[];
 }
 
 export interface IEditProfile {

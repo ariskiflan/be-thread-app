@@ -156,15 +156,6 @@ export const getThreadByUserId = async (id: number) => {
 };
 
 export const createThread = async (payload: Ithread) => {
-  console.log(payload);
-
-  // const thread = await db.thread.create({
-  //   data: {
-  //     ...payload,
-  //     threadId: payload.threadId ? +payload.threadId : null,
-  //   },
-  // });
-
   const thread = await db.thread.create({
     data: {
       content: payload.content,
@@ -173,10 +164,10 @@ export const createThread = async (payload: Ithread) => {
     },
   });
 
-  if (payload.images && payload.images.length > 0) {
+  if (payload.image && payload.image.length > 0) {
     await db.threadImage.createMany({
-      data: payload.images.map((image) => ({
-        image: image.image,
+      data: payload.image.map((img) => ({
+        image: img.image,
         threadId: thread.id,
       })),
     });
