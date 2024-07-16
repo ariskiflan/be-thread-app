@@ -4,7 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.ts"
+    "watch": "tsc -w",
+    "migrate": "prisma migrate deploy",
+    "start": "node dist/server.js",
+    "dev": "nodemon index.ts",
+    "build": "tsc",
+    "postinstall": "prisma generate"
   },
   "keywords": [],
   "author": "",
