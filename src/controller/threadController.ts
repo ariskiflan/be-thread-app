@@ -83,6 +83,8 @@ export const getThreadByUserId = async (req: Request, res: Response) => {
 export const createThread = async (req: Request, res: Response) => {
   try {
     const { body } = req;
+
+
     body.userId = res.locals.user;
     if (body.threadId) {
       body.threadId = +body.threadId;
@@ -104,6 +106,9 @@ export const createThread = async (req: Request, res: Response) => {
     });
   }
 };
+
+
+
 
 export const getReplies = async (req: Request, res: Response) => {
   try {

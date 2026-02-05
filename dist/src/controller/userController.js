@@ -38,9 +38,11 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { body } = req;
         const result = yield userServices.register(body);
+        console.log("Login payload:", body);
         res.json({
             status: true,
             message: "success",
+            data: result,
         });
     }
     catch (error) {
@@ -55,16 +57,21 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.register = register;
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        // ambil payload dari body dulu
         const { username, password } = req.body;
-        const token = yield userServices.login(username, password);
+        console.log("Login payload:", username, password);
+        // panggil service login
+        const result = yield userServices.login(username, password);
+        // console.log("Login success, token:", token);
         res.json({
             status: true,
             message: "success",
-            data: token,
+            data: result,
         });
     }
     catch (error) {
         const err = error;
+        console.error("Login error:", err.message);
         res.status(500).json({
             status: false,
             message: err.message,

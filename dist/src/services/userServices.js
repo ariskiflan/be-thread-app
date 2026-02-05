@@ -38,7 +38,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getUserNotId = exports.getUsersSearch = exports.login = exports.register = exports.getUser = exports.getUsers = void 0;
 const db_1 = __importDefault(require("../db"));
 const register_1 = require("../lib/validation/register");
-const bcrypt = __importStar(require("bcrypt"));
+const bcrypt = __importStar(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const getUsers = () => __awaiter(void 0, void 0, void 0, function* () {
     return yield db_1.default.user.findMany();
@@ -128,7 +128,18 @@ const login = (username, password) => __awaiter(void 0, void 0, void 0, function
     }, process.env.SECRET_KEY, {
         expiresIn: "1D",
     });
-    return token;
+    const profile = yield db_1.default.profile.findFirst({
+        where: { userId: user.id },
+    });
+    return {
+        token,
+        user: {
+            id: user.id,
+            username: user.username,
+            email: user.email,
+            fullname: user.fullname,
+        },
+    };
 });
 exports.login = login;
 const getUsersSearch = () => __awaiter(void 0, void 0, void 0, function* () {

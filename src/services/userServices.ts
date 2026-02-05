@@ -1,7 +1,7 @@
 import db from "../db";
 import { registerValidator } from "../lib/validation/register";
-import { Iregister } from "../type/app";
-import * as bcrypt from "bcrypt";
+import { ILoginResult, Iregister } from "../type/app";
+import * as bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 export const getUsers = async () => {
@@ -78,7 +78,7 @@ export const register = async (payload: Iregister) => {
 export const login = async (
   username: string,
   password: string
-): Promise<string> => {
+): Promise<ILoginResult> => {
   const user = await db.user.findFirst({
     where: {
       OR: [
@@ -108,7 +108,20 @@ export const login = async (
     }
   );
 
-  return token;
+   const profile = await db.profile.findFirst({
+    where: { userId: user.id },
+  });
+
+  return {
+    token,
+    user: {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      fullname: user.fullname,
+    },
+    
+  };
 };
 
 export const getUsersSearch = async () => {

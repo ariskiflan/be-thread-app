@@ -5,13 +5,15 @@ export const register = async (req: Request, res: Response) => {
   try {
     const { body } = req;
     const result = await userServices.register(body);
+    console.log("Login payload:", body);
 
     res.json({
       status: true,
       message: "success",
+      data: result,
     });
   } catch (error) {
-    const err = error as unknown as Error;
+    const err = (error as unknown) as Error;
     // console.log(err);
 
     res.status(500).json({
@@ -23,17 +25,23 @@ export const register = async (req: Request, res: Response) => {
 
 export const login = async (req: Request, res: Response) => {
   try {
+    // ambil payload dari body dulu
     const { username, password } = req.body;
+    console.log("Login payload:", username, password);
 
-    const token = await userServices.login(username, password);
+    // panggil service login
+    const result = await userServices.login(username, password);
+
+    // console.log("Login success, token:", token);
 
     res.json({
       status: true,
       message: "success",
-      data: token,
+      data: result,
     });
   } catch (error) {
-    const err = error as unknown as Error;
+    const err = error as Error;
+    console.error("Login error:", err.message);
 
     res.status(500).json({
       status: false,
@@ -52,7 +60,7 @@ export const getUsers = async (req: Request, res: Response) => {
       data: users,
     });
   } catch (error) {
-    const err = error as unknown as Error;
+    const err = (error as unknown) as Error;
 
     res.status(500).json({
       status: false,
@@ -71,7 +79,7 @@ export const getUser = async (req: Request, res: Response) => {
       data: user,
     });
   } catch (error) {
-    const err = error as unknown as Error;
+    const err = (error as unknown) as Error;
 
     res.status(500).json({
       status: false,
@@ -90,7 +98,7 @@ export const getUsersSearch = async (req: Request, res: Response) => {
       data: users,
     });
   } catch (error) {
-    const err = error as unknown as Error;
+    const err = (error as unknown) as Error;
 
     res.status(500).json({
       status: false,
@@ -130,7 +138,7 @@ export const getUserNotId = async (req: Request, res: Response) => {
       data: users,
     });
   } catch (error) {
-    const err = error as unknown as Error;
+    const err = (error as unknown) as Error;
 
     res.status(500).json({
       status: false,

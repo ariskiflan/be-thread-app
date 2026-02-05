@@ -12,7 +12,7 @@ export const getThreads = async () => {
           image: true,
         },
       },
-      auhtor: {
+      author: {
         select: {
           id: true,
           username: true,
@@ -50,7 +50,7 @@ export const getThread = async (id: number) => {
           image: true,
         },
       },
-      auhtor: {
+      author: {
         select: {
           username: true,
           id: true,
@@ -86,7 +86,7 @@ export const getThreadByToken = async (id: number) => {
           image: true,
         },
       },
-      auhtor: {
+      author: {
         select: {
           username: true,
           id: true,
@@ -123,7 +123,7 @@ export const getThreadByUserId = async (id: number) => {
           image: true,
         },
       },
-      auhtor: {
+      author: {
         select: {
           username: true,
           id: true,
@@ -176,6 +176,10 @@ export const createThread = async (payload: Ithread) => {
   return thread;
 };
 
+
+
+
+
 export const deleteThread = async (idThread: number, userId: number) => {
   const existedThread = await db.thread.findFirst({
     where: {
@@ -214,7 +218,7 @@ export const getReplies = async (threadId: number) => {
           image: true,
         },
       },
-      auhtor: {
+      author: {
         include: {
           profile: {
             select: {

@@ -25,7 +25,7 @@ const getThreads = () => __awaiter(void 0, void 0, void 0, function* () {
                     image: true,
                 },
             },
-            auhtor: {
+            author: {
                 select: {
                     id: true,
                     username: true,
@@ -63,7 +63,7 @@ const getThread = (id) => __awaiter(void 0, void 0, void 0, function* () {
                     image: true,
                 },
             },
-            auhtor: {
+            author: {
                 select: {
                     username: true,
                     id: true,
@@ -99,7 +99,7 @@ const getThreadByToken = (id) => __awaiter(void 0, void 0, void 0, function* () 
                     image: true,
                 },
             },
-            auhtor: {
+            author: {
                 select: {
                     username: true,
                     id: true,
@@ -136,7 +136,7 @@ const getThreadByUserId = (id) => __awaiter(void 0, void 0, void 0, function* ()
                     image: true,
                 },
             },
-            auhtor: {
+            author: {
                 select: {
                     username: true,
                     id: true,
@@ -221,7 +221,7 @@ const getReplies = (threadId) => __awaiter(void 0, void 0, void 0, function* () 
                     image: true,
                 },
             },
-            auhtor: {
+            author: {
                 include: {
                     profile: {
                         select: {

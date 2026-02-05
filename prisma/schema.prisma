@@ -56,7 +56,7 @@ model Thread {
   posted_at DateTime @default(now())
   
   userId Int
-  auhtor User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  author User @relation(fields: [userId], references: [id], onDelete: Cascade)
   like Like[] @relation("thread")
   threadId Int?
   parent Thread? @relation("threadReplies", fields: [threadId], references: [id])

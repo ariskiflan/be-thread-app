@@ -36,7 +36,7 @@ export const getFollower = async (req: Request, res: Response) => {
       data: followers,
     });
   } catch (error) {
-    const err = error as unknown as Error;
+    const err = (error as unknown) as Error;
 
     res.status(500).json({
       status: false,
@@ -57,7 +57,7 @@ export const getFollowings = async (req: Request, res: Response) => {
       data: followings,
     });
   } catch (error) {
-    const err = error as unknown as Error;
+    const err = (error as unknown) as Error;
 
     res.status(500).json({
       status: false,
@@ -78,7 +78,7 @@ export const getFollowingsUsers = async (req: Request, res: Response) => {
       data: followings,
     });
   } catch (error) {
-    const err = error as unknown as Error;
+    const err = (error as unknown) as Error;
 
     res.status(500).json({
       status: false,
@@ -99,7 +99,7 @@ export const getFollowersUsers = async (req: Request, res: Response) => {
       data: followers,
     });
   } catch (error) {
-    const err = error as unknown as Error;
+    const err = (error as unknown) as Error;
 
     res.status(500).json({
       status: false,

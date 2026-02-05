@@ -42,3 +42,16 @@ export interface IImage {
   image: string;
   threadId: number;
 }
+
+export interface IUser {
+  id: number;
+  username: string;
+  fullname: string;
+  email: string;
+}
+
+export interface ILoginResult {
+  token: string;
+  user: IUser;
+  // profile: IProfile | null;
+}
