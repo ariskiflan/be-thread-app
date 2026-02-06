@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+<<<<<<< Updated upstream
     "watch": "tsc -w",
     "migrate": "prisma migrate deploy",
     "start": "node dist/server.js",
@@ -11,6 +12,14 @@
     "build": "tsc",
     "postinstall": "prisma generate",
     "serve": "tsc && node dist/server.js"
+=======
+  "watch": "tsc -w",
+  "migrate": "prisma migrate deploy",
+  "dev": "nodemon --exec ts-node server.ts",
+  "build": "tsc",
+  "start": "node dist/server.js",
+  "postinstall": "prisma generate"
+>>>>>>> Stashed changes
   },
   "keywords": [],
   "author": "",
