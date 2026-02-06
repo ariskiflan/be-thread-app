@@ -19,24 +19,26 @@ model Test {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  username String @unique
-  fullname String 
-  email String @unique
-  password String
-  follower Follow[] @relation("follower")
-  following Follow[] @relation("following")
-  profile Profile?
-  thread Thread[]
-  like Like[] @relation("user")
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  fullname  String 
+  email     String   @unique
+  password  String
   
+  follower  Follow[] @relation("UserFollowers")   
+  following Follow[] @relation("UserFollowing")   
+  
+  profile   Profile?
+  thread    Thread[]
+  like      Like[]   @relation("user")
 }
 
 model Follow {
-  followerId Int
-   follower   User @relation("follower", fields: [followerId], references: [id])
-   followingId Int
-   following  User @relation("following", fields: [followingId], references: [id])
+  followerId  Int
+  followingId Int
+  
+  follower    User @relation("UserFollowing", fields: [followerId], references: [id], onDelete: Cascade)
+  following   User @relation("UserFollowers", fields: [followingId], references: [id], onDelete: Cascade)
   
   @@id([followerId, followingId])
 }
